@@ -28,8 +28,8 @@ function Update () {
 	}
 	if(null != wizardTargetPosition) {
 		var targetDirection = wizardTargetPosition - wizardGameObject.transform.position;
-		var velocity = targetDirection.normalized;
-		wizardGameObject.GetComponent.<Rigidbody>().velocity = velocity;
+		var force = targetDirection.normalized*5;
+		wizardGameObject.GetComponent.<Rigidbody>().AddForce(force);
 	}
 	var thunderNovaPosition = wizardGameObject.transform.position;
 	thunderNovaPosition.y = 0;
