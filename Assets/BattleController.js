@@ -1,6 +1,7 @@
 ﻿#pragma strict
 var wizardGameObject: GameObject;
 var thunderNovaGameObject: GameObject;
+private var enemyGameObject: GameObject;
 private var epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 private var groundPlane = Plane(Vector3(0.0, 1.0, 0.0), Vector3(0, 0, 0));
 private var lastSkillTime: double;
@@ -15,6 +16,11 @@ function Start () {
 	wizardTargetPosition = wizardGameObject.transform.position;
 	thunderNova = thunderNovaGameObject.GetComponent(ThunderNova);
 	nextSkillTime = lastSkillTime + thunderNova.skillTime;
+	NewEnemey();
+}
+function NewEnemey() {
+	enemyGameObject = Instantiate(wizardGameObject, new Vector3(10, 0.5, 15), Quaternion.identity);
+	enemyGameObject.name = 'enemy';
 }
 
 function Update () {
@@ -39,4 +45,9 @@ function Update () {
 		nextSkillTime = lastSkillTime + thunderNova.skillTime;
 	}
 	thunderNova.UpdateUI(timestamp - lastSkillTime);
+
+	if(null == enemyGameObject) { NewEnemey(); }
+	var enemyForce: Vector3 = Vector3(Random.Range(-10.0, 10.0), 0, Random.Range(-10.0, 10.0));
+	enemyForce = enemyForce.normalized*5;
+	enemyGameObject.GetComponent.<Rigidbody>().AddForce(enemyForce);
 }
