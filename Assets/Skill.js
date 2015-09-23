@@ -12,3 +12,9 @@ function SetUiNeedsUpdate(timeAfterCasting: double) {
 	uiNeedsUpdate = true;
 	this.timeAfterCasting = timeAfterCasting;
 }
+function inactivate() {
+	uiNeedsUpdate = true;
+}
+function activate() {
+	uiNeedsUpdate = true;
+}

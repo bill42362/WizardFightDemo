@@ -1,6 +1,7 @@
 ﻿#pragma strict
 var wizardGameObject: GameObject;
 var thunderNovaGameObject: GameObject;
+var fireCannonGameObject: GameObject;
 private var epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 private var groundPlane = Plane(Vector3(0.0, 1.0, 0.0), Vector3(0, 0, 0));
 private var usingSkillGameObject: GameObject;
@@ -12,6 +13,7 @@ private var wizardTargetPosition: Vector3;
 private var usingSkill: Skill; // Skill.js
 
 function Start () {
+	fireCannonGameObject.SetActive(false);
 	lastSkillTime = (System.DateTime.UtcNow - epochStart).TotalSeconds;
 	wizard = wizardGameObject.GetComponent(Wizard);
 	wizardTargetPosition = wizardGameObject.transform.position;
@@ -23,7 +25,16 @@ function NewEnemey() {
 	enemyGameObject = Instantiate(wizardGameObject, new Vector3(10, 0.5, 15), Quaternion.identity);
 	enemyGameObject.name = 'enemy';
 }
+function UnsetUsingSkill() {
+	if(null != usingSkillGameObject) {
+		usingSkillGameObject.SetActive(false);
+		usingSkillGameObject = null;
+	}
+	if(null != usingSkill) { usingSkill = null; }
+}
 function SetUsingSkill(skillGameObject: GameObject) {
+	UnsetUsingSkill();
+	skillGameObject.SetActive(true);
 	usingSkillGameObject = skillGameObject;
 	usingSkill = usingSkillGameObject.GetComponent(Skill);
 }
