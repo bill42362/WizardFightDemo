@@ -1,9 +1,9 @@
 ﻿#pragma strict
 var skillTime: double;
-var castingTime: double = 3.0;
-var alertTime: double = 1.0;
-var effectTime: double = 0.1;
-var damage: double = 10.0;
+var castingTime: double = 1.0;
+var alertTime: double = 3.0;
+var effectTime: double = 5.0;
+var pullForce: double = 5.0;
 private var skillObject: Skill; // Skill.js
 private var rendererObject: Renderer;
 private var effecting = false;
@@ -28,14 +28,17 @@ function UpdateUI(time: double) {
 	} else if(castingTime + alertTime > time) {
 		rendererObject.material.color = Color(0.8, 0.2, 0.6, 0.5);
 	} else {
-		rendererObject.material.color = Color(1.0, 0.3, 0.3, 0.5);
+		rendererObject.material.color = Color(0.0, 0.0, 0.0, 0.5);
 		effecting = true;
 	}
 	skillObject.uiNeedsUpdate = false;
 }
 function OnTriggerStay(other: Collider) {
 	if((true == effecting) && ('enemy' == other.name)) {
-		var enemy: Wizard = other.gameObject.GetComponent(Wizard);
-		enemy.Damage(damage);
+		var enemyGameObject: GameObject = other.gameObject;
+		var selfPosition = transform.position;
+		var enemyPosition = enemyGameObject.transform.position;
+		var force = (selfPosition - enemyPosition)*pullForce;
+		enemyGameObject.GetComponent.<Rigidbody>().AddForce(force);
 	}
 }

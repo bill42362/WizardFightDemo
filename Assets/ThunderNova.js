@@ -3,7 +3,7 @@ var skillTime: double;
 var castingTime: double = 2.0;
 var alertTime: double = 1.0;
 var effectTime: double = 0.2;
-var damage: double = 5.0;
+var damage: double = 3.0;
 private var skillObject: Skill; // Skill.js
 private var rendererObject: Renderer;
 private var effecting = false;
