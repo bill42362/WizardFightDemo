@@ -1,8 +1,8 @@
 ﻿#pragma strict
 var wizardGameObject: GameObject;
-var thunderNovaGameObject: GameObject;
-var fireCannonGameObject: GameObject;
-var deathVortexGameObject: GameObject;
+var thunderNovaCasterGameObject: GameObject;
+var fireCannonCasterGameObject: GameObject;
+var deathVortexCasterGameObject: GameObject;
 private var epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 private var groundPlane = Plane(Vector3(0.0, 1.0, 0.0), Vector3(0, 0, 0));
 private var skills = new Array();
@@ -16,12 +16,12 @@ private var wizardTargetPosition: Vector3;
 private var usingSkill: Skill; // Skill.js
 
 function Start () {
-	thunderNovaGameObject.SetActive(false);
-	fireCannonGameObject.SetActive(false);
-	deathVortexGameObject.SetActive(false);
-	skills.Add(thunderNovaGameObject);
-	skills.Add(fireCannonGameObject);
-	skills.Add(deathVortexGameObject);
+	thunderNovaCasterGameObject.SetActive(false);
+	fireCannonCasterGameObject.SetActive(false);
+	deathVortexCasterGameObject.SetActive(false);
+	skills.Add(thunderNovaCasterGameObject);
+	skills.Add(fireCannonCasterGameObject);
+	skills.Add(deathVortexCasterGameObject);
 	lastSkillTime = (System.DateTime.UtcNow - epochStart).TotalSeconds;
 	wizard = wizardGameObject.GetComponent(Wizard);
 	wizardTargetPosition = wizardGameObject.transform.position;
