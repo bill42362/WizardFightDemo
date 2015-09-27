@@ -4,6 +4,7 @@ var timeAfterCasting: double;
 var skillTime: double;
 var castingTime: double;
 var alertTime: double;
+var skillName: String;
 
 function Start () { }
 

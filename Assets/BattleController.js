@@ -1,8 +1,10 @@
 ﻿#pragma strict
 var wizardGameObject: GameObject;
+var skillButtonGameObject: GameObject;
 var thunderNovaCasterGameObject: GameObject;
 var fireCannonCasterGameObject: GameObject;
 var deathVortexCasterGameObject: GameObject;
+private var canvasGameObject: GameObject;
 private var epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 private var groundPlane = Plane(Vector3(0.0, 1.0, 0.0), Vector3(0, 0, 0));
 private var skills = new Array();
@@ -16,12 +18,9 @@ private var wizardTargetPosition: Vector3;
 private var usingSkill: Skill; // Skill.js
 
 function Start () {
-	thunderNovaCasterGameObject.SetActive(false);
-	fireCannonCasterGameObject.SetActive(false);
-	deathVortexCasterGameObject.SetActive(false);
-	skills.Add(thunderNovaCasterGameObject);
-	skills.Add(fireCannonCasterGameObject);
-	skills.Add(deathVortexCasterGameObject);
+	AddSkillCaster(thunderNovaCasterGameObject);
+	AddSkillCaster(fireCannonCasterGameObject);
+	AddSkillCaster(deathVortexCasterGameObject);
 	lastSkillTime = (System.DateTime.UtcNow - epochStart).TotalSeconds;
 	wizard = wizardGameObject.GetComponent(Wizard);
 	wizardTargetPosition = wizardGameObject.transform.position;
@@ -32,6 +31,24 @@ function Start () {
 function NewEnemey() {
 	enemyGameObject = Instantiate(wizardGameObject, new Vector3(10, 0.5, 15), Quaternion.identity);
 	enemyGameObject.name = 'enemy';
+}
+function AddSkillCaster(s: GameObject) {
+	if(null == canvasGameObject) {
+		canvasGameObject = new GameObject("canvas", Canvas);
+		canvasGameObject.GetComponent(RectTransform).sizeDelta = Vector2(Screen.width, Screen.height);
+		canvasGameObject.GetComponent(RectTransform).pivot = Vector2(0, 0);
+		var canvas = canvasGameObject.GetComponent(Canvas);
+		canvas.renderMode = RenderMode.ScreenSpaceCamera;
+		canvas.pixelPerfect = true;
+	}
+	var skillButtonGb = Instantiate(skillButtonGameObject);
+	skillButtonGb.transform.SetParent(canvasGameObject.transform, false);
+	skillButtonGb.SetActive(true);
+	s.SetActive(false);
+	skills.Add(s);
+	var skillButton = skillButtonGb.GetComponent(SkillButton);
+	skillButton.SetCaster(s);
+	skillButton.SetSkillSequence(skills.length - 1);
 }
 function UnsetUsingSkill() {
 	if(null != usingSkillGameObject) {
