@@ -1,12 +1,17 @@
 ﻿#pragma strict
 var skillCaster: GameObject;
 var skillName: String = '(Null)';
+var battleController: BattleController;
 private var TOTAL_SKILL_NUM: int = 3;
 private var MAX_WIDTH: int = 100;
 private var skillSequence: int = 0;
 private var needsLayout: boolean = true;
+private var buttonObject: UI.Button;
 
-function Start () { }
+function Start () {
+	buttonObject = GetComponent(UI.Button);
+	buttonObject.onClick.AddListener(OnClick);
+}
 function Update () { }
 
 function SetNeedsLayout() {
@@ -34,5 +39,10 @@ function OnGUI() {
 		rectTransform.anchoredPosition = Vector2(posX, 0);
 		gameObject.GetComponentInChildren(UI.Text).text = skillName;
 		needsLayout = false;
+	}
+}
+function OnClick() {
+	if(null != battleController) {
+		battleController.ReplySkillButtonClicked(skillSequence);
 	}
 }
