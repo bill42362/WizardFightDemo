@@ -2,6 +2,7 @@
 var skillCaster: GameObject;
 var skillName: String = '(Null)';
 var battleController: BattleController;
+var turnedOffSkillButtonMaterial: Material;
 private var TOTAL_SKILL_NUM: int = 3;
 private var MAX_WIDTH: int = 100;
 private var skillSequence: int = 0;
@@ -26,7 +27,15 @@ function SetCaster(c: GameObject) {
 	skillName = c.GetComponent(Skill).skillName;
 	SetNeedsLayout();
 }
+function SetTurnedOn(turnedOn: boolean) {
+	if(true == turnedOn) {
+		GetComponent(UI.Image).material = null;
+	} else {
+		GetComponent(UI.Image).material = turnedOffSkillButtonMaterial;
+	}
+}
 function SetRenderColor(c: Color) {
+	c.a = 0.75;
 	GetComponent(UI.Image).color = c;
 }
 function OnGUI() {

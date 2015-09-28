@@ -76,6 +76,8 @@ function SetUsingSkillIndex(i: int) {
 }
 function ReplySkillButtonClicked(i: int) {
 	skillTurnedOn[i] = !skillTurnedOn[i];
+	var skillButton: SkillButton = skillButtons[i];
+	skillButton.SetTurnedOn(skillTurnedOn[i]);
 }
 private function GetNextSkillIndex(): int {
 	var index = -1;
