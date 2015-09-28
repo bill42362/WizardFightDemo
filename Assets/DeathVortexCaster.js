@@ -15,6 +15,7 @@ function Start () {
 	skillObject.castingTime = castingTime;
 	skillObject.alertTime = alertTime;
 	skillObject.skillName = 'Death Vortex';
+	skillObject.SetRenderColor(Color(0.0, 0.0, 0.0, 0.5));
 	rendererObject = this.GetComponent.<Renderer>();
 }
 function Update() {
@@ -24,14 +25,17 @@ function Update() {
 }
 function UpdateUI(time: double) {
 	effecting = false;
+	var renderColor: Color = Color(0.0, 0.0, 0.0, 0.0);
 	if(castingTime > time) {
-		rendererObject.material.color = Color(0.2, 0.6, 0.8, 0.5);
+		renderColor = Color(0.2, 0.6, 0.8, 0.5);
 	} else if(castingTime + alertTime > time) {
-		rendererObject.material.color = Color(0.8, 0.2, 0.6, 0.5);
+		renderColor = Color(0.8, 0.2, 0.6, 0.5);
 	} else {
-		rendererObject.material.color = Color(0.0, 0.0, 0.0, 0.5);
+		renderColor = Color(0.0, 0.0, 0.0, 0.5);
 		effecting = true;
 	}
+	rendererObject.material.color = renderColor;
+	skillObject.SetRenderColor(renderColor);
 	skillObject.uiNeedsUpdate = false;
 }
 function OnTriggerStay(other: Collider) {

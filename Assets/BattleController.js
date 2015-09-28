@@ -8,8 +8,10 @@ private var canvasGameObject: GameObject;
 private var epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 private var groundPlane = Plane(Vector3(0.0, 1.0, 0.0), Vector3(0, 0, 0));
 private var skills = new Array();
+private var skillButtons = new Array();
 private var usingSkillIndex: int = 0;
 private var usingSkillGameObject: GameObject;
+private var usingSkillButton: SkillButton; // SkillButton.js
 private var enemyGameObject: GameObject;
 private var lastSkillTime: double;
 private var nextSkillTime: double;
@@ -25,7 +27,7 @@ function Start () {
 	wizard = wizardGameObject.GetComponent(Wizard);
 	wizardTargetPosition = wizardGameObject.transform.position;
 	NewEnemey();
-	SetUsingSkill(skills[usingSkillIndex]);
+	SetUsingSkillIndex(usingSkillIndex);
 	nextSkillTime = lastSkillTime + usingSkill.skillTime;
 }
 function NewEnemey() {
@@ -49,19 +51,25 @@ function AddSkillCaster(s: GameObject) {
 	var skillButton = skillButtonGb.GetComponent(SkillButton);
 	skillButton.SetCaster(s);
 	skillButton.SetSkillSequence(skills.length - 1);
+	skillButton.SetRenderColor(s.GetComponent(Skill).GetRenderColor());
+	skillButtons.Add(skillButton);
 }
-function UnsetUsingSkill() {
+private function UnsetUsingSkill() {
 	if(null != usingSkillGameObject) {
 		usingSkillGameObject.SetActive(false);
 		usingSkillGameObject = null;
 	}
 	if(null != usingSkill) { usingSkill = null; }
 }
-function SetUsingSkill(skillGameObject: GameObject) {
+private function SetUsingSkill(skillGameObject: GameObject) {
 	UnsetUsingSkill();
 	skillGameObject.SetActive(true);
 	usingSkillGameObject = skillGameObject;
 	usingSkill = usingSkillGameObject.GetComponent(Skill);
+}
+function SetUsingSkillIndex(i: int) {
+	SetUsingSkill(skills[i]);
+	usingSkillButton = skillButtons[i];
 }
 
 function Update () {
@@ -85,12 +93,14 @@ function Update () {
 	if(nextSkillTime < timestamp) {
 		++usingSkillIndex;
 		if(skills.length == usingSkillIndex) { usingSkillIndex = 0; }
-		SetUsingSkill(skills[usingSkillIndex]);
+		SetUsingSkillIndex(usingSkillIndex);
 		lastSkillTime = nextSkillTime;
 		nextSkillTime += usingSkill.skillTime;
 	}
 	var timeAfterCasting = timestamp - lastSkillTime;
-	usingSkillGameObject.GetComponent(Skill).SetUiNeedsUpdate(timeAfterCasting);
+	var skillObject = usingSkillGameObject.GetComponent(Skill);
+	skillObject.SetUiNeedsUpdate(timeAfterCasting);
+	usingSkillButton.SetRenderColor(skillObject.GetRenderColor());
 
 	if(null == enemyGameObject) { NewEnemey(); }
 	var enemyForce: Vector3 = Vector3(Random.Range(-10.0, 10.0), 0, Random.Range(-11.0, 9.0));

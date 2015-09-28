@@ -5,6 +5,7 @@ var skillTime: double;
 var castingTime: double;
 var alertTime: double;
 var skillName: String;
+private var renderColor: Color;
 
 function Start () { }
 
@@ -19,3 +20,5 @@ function inactivate() {
 function activate() {
 	uiNeedsUpdate = true;
 }
+function GetRenderColor(): Color { return renderColor; }
+function SetRenderColor(c: Color) { renderColor = c; }

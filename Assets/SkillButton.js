@@ -21,6 +21,9 @@ function SetCaster(c: GameObject) {
 	skillName = c.GetComponent(Skill).skillName;
 	SetNeedsLayout();
 }
+function SetRenderColor(c: Color) {
+	GetComponent(UI.Image).color = c;
+}
 function OnGUI() {
 	if(true == needsLayout) {
 		var width = Mathf.Min(MAX_WIDTH, Screen.width/TOTAL_SKILL_NUM);
