@@ -1,7 +1,7 @@
 ﻿#pragma strict
 var skillCaster: GameObject;
 var skillName: String = '(Null)';
-private var TOTAL_SKILL_NUM: int = 5;
+private var TOTAL_SKILL_NUM: int = 3;
 private var MAX_WIDTH: int = 100;
 private var skillSequence: int = 0;
 private var needsLayout: boolean = true;
@@ -29,6 +29,7 @@ function OnGUI() {
 		var rectTransform = gameObject.GetComponent(RectTransform);
 		rectTransform.sizeDelta = Vector2(width, height);
 		rectTransform.anchoredPosition = Vector2(posX, 0);
+		gameObject.GetComponentInChildren(UI.Text).text = skillName;
 		needsLayout = false;
 	}
 }

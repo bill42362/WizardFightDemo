@@ -14,7 +14,7 @@ function Start () {
 	skillObject.skillTime = skillTime;
 	skillObject.castingTime = castingTime;
 	skillObject.alertTime = alertTime;
-	skillObject.skillName = 'ThunderNova';
+	skillObject.skillName = 'Thunder Nova';
 	rendererObject = this.GetComponent.<Renderer>();
 }
 function Update() {
