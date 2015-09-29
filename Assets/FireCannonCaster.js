@@ -26,16 +26,20 @@ function Update() {
 function UpdateUI(time: double) {
 	effecting = false;
 	var renderColor: Color = Color(0.0, 0.0, 0.0, 0.0);
+	var isVisiable = false;
 	if(castingTime > time) {
 		renderColor = Color(0.2, 0.6, 0.8, 0.5);
 	} else if(castingTime + alertTime > time) {
 		renderColor = Color(0.8, 0.2, 0.6, 0.5);
+		isVisiable = true;
 	} else {
 		renderColor = Color(1.0, 0.3, 0.3, 0.5);
+		isVisiable = true;
 		effecting = true;
 	}
 	rendererObject.material.color = renderColor;
 	skillObject.SetRenderColor(renderColor);
+	skillObject.SetIsVisiable(isVisiable);
 	skillObject.uiNeedsUpdate = false;
 }
 function OnTriggerStay(other: Collider) {

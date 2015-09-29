@@ -6,6 +6,7 @@ var castingTime: double;
 var alertTime: double;
 var skillName: String;
 private var renderColor: Color;
+private var isVisiable = false;
 
 function Start () { }
 
@@ -22,3 +23,5 @@ function activate() {
 }
 function GetRenderColor(): Color { return renderColor; }
 function SetRenderColor(c: Color) { renderColor = c; }
+function GetIsVisiable(): boolean { return isVisiable; }
+function SetIsVisiable(i: boolean) { isVisiable = i; }

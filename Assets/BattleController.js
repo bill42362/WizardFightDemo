@@ -35,6 +35,9 @@ function Start () {
 function NewEnemey() {
 	enemyGameObject = Instantiate(wizardGameObject, new Vector3(10, 0.5, 15), Quaternion.identity);
 	enemyGameObject.name = 'enemy';
+	var enemyAi = enemyGameObject.GetComponent(EnemyAI);
+	enemyAi.isEnemy = true;
+	enemyAi.player = wizardGameObject;
 }
 function AddSkillCaster(s: GameObject) {
 	if(null == canvasGameObject) {
@@ -113,7 +116,9 @@ function Update () {
 		var force = targetDirection.normalized*5;
 		wizardGameObject.GetComponent.<Rigidbody>().velocity = force;
 	}
-	
+
+	if(null == enemyGameObject) { NewEnemey(); }
+
 	if(nextSkillTime < timestamp) {
 		var nextSkillIndex = GetNextSkillIndex();
 		if(-1 != nextSkillIndex) {
@@ -134,10 +139,6 @@ function Update () {
 		var timeAfterCasting = timestamp - lastSkillTime;
 		skillObject.SetUiNeedsUpdate(timeAfterCasting);
 		usingSkillButton.SetRenderColor(skillObject.GetRenderColor());
+		enemyGameObject.GetComponent(EnemyAI).shouldRunAway = skillObject.GetIsVisiable();
 	}
-
-	if(null == enemyGameObject) { NewEnemey(); }
-	var enemyForce: Vector3 = Vector3(Random.Range(-10.0, 10.0), 0, Random.Range(-11.0, 9.0));
-	enemyForce = enemyForce.normalized*5;
-	enemyGameObject.GetComponent.<Rigidbody>().AddForce(enemyForce);
 }
