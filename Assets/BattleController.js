@@ -5,6 +5,7 @@ var thunderNovaCasterGameObject: GameObject;
 var fireCannonCasterGameObject: GameObject;
 var deathVortexCasterGameObject: GameObject;
 var canvasGameObject: GameObject;
+var uiTriggeredTimestamp: double = 0.0;
 private var epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 private var groundPlane = Plane(Vector3(0.0, 1.0, 0.0), Vector3(0, 0, 0));
 private var skills = new Array();
@@ -97,10 +98,14 @@ private function GetNextSkillIndex(): int {
 function Update () {
 	var timestamp = (System.DateTime.UtcNow - epochStart).TotalSeconds;
 	if(Input.GetMouseButtonUp(0)) {
-		var ray: Ray = Camera.main.ScreenPointToRay(Input.mousePosition);
-		var rayDistance: float;
-		if(groundPlane.Raycast(ray, rayDistance)) {
-			wizardTargetPosition = ray.GetPoint(rayDistance);
+		var diff: float = uiTriggeredTimestamp - timestamp*1000;
+		var diffAbs: float = Mathf.Abs(diff);
+		if(0.05 < diffAbs) {
+			var ray: Ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+			var rayDistance: float;
+			if(groundPlane.Raycast(ray, rayDistance)) {
+				wizardTargetPosition = ray.GetPoint(rayDistance);
+			}
 		}
 	}
 	if(null != wizardTargetPosition) {

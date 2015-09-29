@@ -3,6 +3,7 @@ var skillCaster: GameObject;
 var skillName: String = '(Null)';
 var battleController: BattleController;
 var turnedOffSkillButtonMaterial: Material;
+private var epochStart = new System.DateTime(1970, 1, 1, 0, 0, 0, System.DateTimeKind.Utc);
 private var TOTAL_SKILL_NUM: int = 3;
 private var MAX_WIDTH: int = 100;
 private var skillSequence: int = 0;
@@ -52,6 +53,7 @@ function OnGUI() {
 }
 function OnClick() {
 	if(null != battleController) {
+		battleController.uiTriggeredTimestamp = (System.DateTime.UtcNow - epochStart).TotalMilliseconds;
 		battleController.ReplySkillButtonClicked(skillSequence);
 	}
 }
