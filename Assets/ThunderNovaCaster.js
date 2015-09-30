@@ -1,7 +1,7 @@
 ﻿#pragma strict
 var skillTime: double;
 var castingTime: double = 2.0;
-var alertTime: double = 1.0;
+var alertTime: double = 2.0;
 var effectTime: double = 0.2;
 var damage: double = 3.0;
 private var skillObject: Skill; // Skill.js
@@ -43,7 +43,7 @@ function UpdateUI(time: double) {
 	skillObject.uiNeedsUpdate = false;
 }
 function OnTriggerStay(other: Collider) {
-	if((true == effecting) && ('enemy' == other.name)) {
+	if((true == effecting) && (skillObject.GetWizardName() != other.name)) {
 		var enemy: Wizard = other.gameObject.GetComponent(Wizard);
 		enemy.Damage(damage);
 	}

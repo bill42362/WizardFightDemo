@@ -5,6 +5,7 @@ var skillTime: double;
 var castingTime: double;
 var alertTime: double;
 var skillName: String;
+var wizardName: String = 'player';
 private var renderColor: Color;
 private var isVisiable = false;
 
@@ -25,3 +26,4 @@ function GetRenderColor(): Color { return renderColor; }
 function SetRenderColor(c: Color) { renderColor = c; }
 function GetIsVisiable(): boolean { return isVisiable; }
 function SetIsVisiable(i: boolean) { isVisiable = i; }
+function GetWizardName(): String { return wizardName; }

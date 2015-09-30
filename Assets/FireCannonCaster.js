@@ -43,7 +43,7 @@ function UpdateUI(time: double) {
 	skillObject.uiNeedsUpdate = false;
 }
 function OnTriggerStay(other: Collider) {
-	if((true == effecting) && ('enemy' == other.name)) {
+	if((true == effecting) && (skillObject.GetWizardName() != other.name)) {
 		var enemy: Wizard = other.gameObject.GetComponent(Wizard);
 		enemy.Damage(damage);
 	}
