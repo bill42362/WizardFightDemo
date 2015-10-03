@@ -157,7 +157,7 @@ function Update () {
 	}
 	if(null != playerTargetPosition) {
 		var targetDirection = playerTargetPosition - playerGameObject.transform.position;
-		var force = targetDirection.normalized*5;
+		var force = targetDirection.normalized*15;
 		playerGameObject.GetComponent.<Rigidbody>().velocity = force;
 	}
 
